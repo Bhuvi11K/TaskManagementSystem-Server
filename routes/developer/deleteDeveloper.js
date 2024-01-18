@@ -19,15 +19,6 @@ router.delete("/", authenticateToken, async (req, res) => {
       return res.status(404).json({ error: "Developer is not found" });
     }
 
-    const taskExists = await db("tasks")
-      .where({ developer_id: developerId })
-      .first();
-
-    if (taskExists) {
-      // If the developer_id is found in tasks table, delete the corresponding row first
-      await db("tasks").where({ developer_id: developerId }).del();
-    }
-
     const taskDurationExists = await db("taskduration")
       .where({ developer_id: developerId })
       .first();
@@ -35,6 +26,15 @@ router.delete("/", authenticateToken, async (req, res) => {
     if (taskDurationExists) {
       // If the developer_id is found in taskduration table, delete the corresponding row first
       await db("taskduration").where({ developer_id: developerId }).del();
+    }
+
+    const taskExists = await db("tasks")
+      .where({ developer_id: developerId })
+      .first();
+
+    if (taskExists) {
+      // If the developer_id is found in tasks table, delete the corresponding row first
+      await db("tasks").where({ developer_id: developerId }).del();
     }
 
     await db("teams").where({ developer_id: developerId }).del();
