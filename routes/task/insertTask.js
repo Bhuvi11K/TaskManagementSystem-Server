@@ -5,12 +5,13 @@ const db = require("../../db/knexfile");
 const { authenticateToken } = require("../../middleware/authenticateToken");
 
 router.post("/", authenticateToken, async (req, res) => {
-  const { developer, task } = req.body;
+  const { developerId, task, managerId } = req.body;
 
   try {
     await db("tasks").insert({
-      developer_id: developer,
+      developer_id: developerId,
       task: task,
+      manager_id: managerId,
     });
 
     res.status(201).json({ message: "Task created successfully" });

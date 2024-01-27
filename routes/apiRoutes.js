@@ -20,6 +20,9 @@ const updateTaskRouter = require("./task/updateTask");
 const insertteamsRouter = require("./team/insertTeams");
 const deleteTeamRouter = require("./team/deleteTeam");
 
+const updateUserRouter = require("./user/updateUser");
+const deleteUserRouter = require("./user/deleteUser");
+
 const router = express.Router();
 
 router.use("/login", signinRoute);
@@ -41,5 +44,8 @@ router.use("/updateTask", updateTaskRouter);
 
 router.use("/insertteams", insertteamsRouter);
 router.use("/deleteTeam", deleteTeamRouter);
+
+router.use("/updateUserProfile", updateUserRouter);
+router.use("/deleteUser", deleteUserRouter);
 
 module.exports = router;

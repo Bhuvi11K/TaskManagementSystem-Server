@@ -19,7 +19,10 @@ router.delete("/", authenticateToken, async (req, res) => {
   }
 
   try {
-    const managerExists = await db("teams").where({ id: managerId }).first();
+    const managerExists = await db("teams")
+      .where({ manager_id: managerId })
+      .first();
+    console.log("Manager exists:", managerExists);
 
     if (!managerExists) {
       return res.status(404).json({ error: "Manager Id not found" });

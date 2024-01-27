@@ -10,7 +10,11 @@ app.use(cors());
 
 app.use("/api", apiRoutes);
 
-const PORT = 3000;
-app.listen(PORT, () => {
+const PORT = 1102;
+
+const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
+

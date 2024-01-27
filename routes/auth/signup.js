@@ -4,13 +4,21 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const db = require("../../db/knexfile");
 
-
 // Signup route
 router.post("/", async (req, res) => {
   const { name, role, email, password } = req.body;
 
   try {
     console.log("Received signup request:", { name, role, email });
+
+    // Check if the email already exists in the appusers table
+    const existingUser = await db("appusers").where({ email }).first();
+
+    if (existingUser) {
+      console.log("Email already exists:", email);
+      return res.status(400).json({ error: "Email already exists" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await db("appusers").insert({
